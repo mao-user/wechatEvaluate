@@ -32,27 +32,56 @@ app.all('*', function(req, res, next) {
 /*************************
 *	处理用户登录
 *************************/
-app.post('/stulogin', function(req, res){
-	var id = req.body.id;
-	var pass = req.body.pass;	
-	sqlOpt.stulogin(id, pass, function(data){
-		res.status(200).end(JSON.stringify(data));				
-		switch(data.logStatu)
-		{
-			case 'yes':
-				//res.status(200).end(JSON.stringify(data));
-				console.log('IP [%s] User %s login Successful at %s', getIP(req), id, moment().format('YYYY-MM-DD HH:mm:ss'));
-				break;
-			case 'no':
-				//res.status(200).end(JSON.stringify(data));
-				console.log('IP [%s] User %s login Failed at %s', getIP(req), id, moment().format('YYYY-MM-DD HH:mm:ss'));
-				break;
-			case 'error':
-			default:
-				break;
-		}
-	});
-});
+exports.stulogin = function (id, pass, callBack) {
+    // 定义 SQL 查询语句
+    const getSQL = 'SELECT * FROM stuInfo WHERE stuID = ? AND stuPWD = ?';
+
+    // 加密密码（如果需要加密，可以启用）
+    // const getParam = [id, secOpt.aesCrypto(pass)]; // 如果需要加密，解开此行
+    const getParam = [id, pass]; // 如果密码不加密，直接使用
+
+    // 创建数据库连接
+    const con = mysql.createConnection(config.SQLInfo);
+
+    // 连接到数据库
+    con.connect((err) => {
+        if (err) {
+            console.error('Database connection error:', err.message);
+            callBack({ logStatu: 'error' });
+            return;
+        }
+
+        // 执行查询
+        con.query(getSQL, getParam, (err, result) => {
+            // 查询出错时
+            if (err) {
+                console.error('Query error:', err.message);
+                callBack({ logStatu: 'error' });
+            } else if (result.length > 0) {
+                // 查询成功且有结果
+                const ret = {
+                    logStatu: 'yes',
+                    name: result[0].stuName,
+                    id: result[0].stuID,
+                    age: result[0].stuAge,
+                    _class: result[0].stuClass,
+                    sex: result[0].stuSex,
+                    role: 'stu',
+                    isSTU: true,
+                };
+                callBack(ret);
+            } else {
+                // 查询成功但没有匹配结果
+                callBack({ logStatu: 'no' });
+            }
+
+            // 关闭连接
+            con.end((err) => {
+                if (err) console.error('Error closing connection:', err.message);
+            });
+        });
+    });
+};
 
 /*************************
 *	处理用户登录 教师
