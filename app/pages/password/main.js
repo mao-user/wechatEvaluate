@@ -97,7 +97,7 @@ Page({
       title: '正在提交...',
     });
     wx.request({
-      url: 'baseUrl' + optSet,
+      url: 'https://active-snipe-sensible.ngrok-free.app' + optSet,
       data: {
         id: _id,
         pass : _old,

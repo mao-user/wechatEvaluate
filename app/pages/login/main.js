@@ -66,13 +66,13 @@ Page({
     else
       tplogin = 'tchLogin';
     wx.request({
-      url: 'baseUrl' + tplogin,
-      data: {
+      url: 'https://active-snipe-sensible.ngrok-free.app/' + tplogin,
+      data:{
         id:that.data.userInfo.number,
         pass:that.data.userInfo.password
       },
       header: {
-        'Content-Type':'application/x-www-form-urlencoded'
+        'Content-Type':'application/json'
       },
       method: 'POST',
       dataType: 'json',

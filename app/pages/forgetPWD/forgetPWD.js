@@ -149,7 +149,7 @@ Page({
     });
     //请求数据
     wx.request({
-      url: 'baseUrl/getFCode',
+      url: 'https://active-snipe-sensible.ngrok-free.app/getFCode',
       data: {
         acc: that.data.macc,
         mail: that.data.mmail,
@@ -233,7 +233,7 @@ Page({
             title: '正在提交...',
           });
           wx.request({
-            url: 'baseUrl/resetPwd',
+            url: 'https://active-snipe-sensible.ngrok-free.app/resetPwd',
             data: {
               acc: _acc,
               mail: _mail,
