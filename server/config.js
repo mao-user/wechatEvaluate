@@ -9,8 +9,8 @@ exports.credentials = {
 
 //数据库配置
 exports.SQLInfo = {
-	host     : 'ip',
-	user     : 'username',
-	password : 'password',
-	database : 'dataBase'
+	host     : 'localhost',
+	user     : 'root',
+	password : 'root',
+	database : 'user'
 };
