@@ -155,7 +155,9 @@ Page({
         mail: that.data.mmail,
         isStu: that.data.isStu
       },
-      header: {},
+      header: {
+        'ngrok-skip-browser-warning': '1',
+      },
       method: 'POST',
       dataType: 'json',
       responseType: 'text',
@@ -241,7 +243,9 @@ Page({
               code: _code,
               isStu: that.data.isStu
             },
-            header: {},
+            header: {
+              'ngrok-skip-browser-warning': '1',
+            },
             method: 'POST',
             dataType: 'json',
             responseType: 'text',

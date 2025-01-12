@@ -145,7 +145,7 @@ Page({
       title: '注册中...',
     });
     wx.request({
-      url: 'url',
+      url: 'https://active-snipe-sensible.ngrok-free.app/',
       data: _info,
       header: {},
       method: 'POST',

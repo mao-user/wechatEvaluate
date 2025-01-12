@@ -83,9 +83,11 @@ Page({
             title: '正在提交...'
           });
           wx.request({
-            url: 'url',
+            url: 'https://active-snipe-sensible.ngrok-free.app',
             data: _info,
-            header: {},
+            header: {
+              'ngrok-skip-browser-warning': '1',
+            },
             method: 'POST',
             dataType: 'json',
             responseType: 'text',

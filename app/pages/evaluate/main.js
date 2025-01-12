@@ -43,13 +43,16 @@ Page({
     else
       opt = 'pjTchInfo';
     wx.request({
-      url: 'baseUrl' + opt + '?id=' + app.globalData.cUser.id,
+      url: 'https://active-snipe-sensible.ngrok-free.app/' + opt + '?id=' + app.globalData.cUser.id,
       data: '',
-      header: {},
+      header: {
+        'ngrok-skip-browser-warning': '1',
+      },
       method: 'GET',
       dataType: 'json',
       responseType: 'text',
       success: function (res) {
+        console.log('服务器返回的数据:', res.data);
         if (res.data.length == 0)
           return;
         that.setData({
